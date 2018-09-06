@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+
+<style id="webmakerstyle">
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: #eeeeee;
+}
+@keyframes bg {
+      0% {background: red;}
+      25% {background: blue;}
+      50% {background: green;}
+      75% {background: violet;}
+      100% {background: black;}
+    }
+
+.animate {
+	animation: bg 0.5s;
+}
+
+.card {
+	width: 100px;
+	height: 160px;
+	margin: 10px;
+	text-align: left;
+	padding: 6px;
+	box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 2px solid white;
+  font-size: 18px;
+  background-color: #fd79a8;
+}
+.card[data-data='2'] {
+  background-color: #1abc9c;
+}
+.card[data-data='4'] {
+  background-color: #e74c3c;
+}
+.card[data-data='8'] {
+  background-color: #3498db;
+}
+.card[data-data='16'] {
+  background-color: #f39c12;
+}
+.card[data-data='32'] {
+  background-color: #9b59b6;
+}
+.card[data-data='64'] {
+  background-color: #2c3e50;
+}
+
+.slot {
+	background: #aaaaaa;
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	position: relative;
+	padding: 20px;
+}
+.slot-inner {
+  width: 90%;
+  height: 90%;
+  border-radius: 5px;
+  border: 3px solid #eee;
+  text-align: center;
+}
+.slot-inner .hand {
+  margin-top: 25px;
+  margin-left: 4px;
+}
+.card-in-slot {
+	margin: 0;
+	user-select: none;
+  position: absolute;
+	box-sizing: border-box;
+}
+
+#card-src-container, #card-dest-container {
+	display: flex;
+	width: 600px;
+	margin: auto;
+}
+
+#card-src-container {
+	min-height: 100px;
+	background: #fff;
+	border-radius: 5px;
+	margin-top: 30px;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+#card-dest-container {
+	background: #ffffff;
+	border-radius: 5px;
+	min-height: 100px;
+	height: 404px;
+}
+.fake-node {
+	position: absolute;
+	transition: all 0.3s ease-in-out;
+}
+#card-src-container .card:first-child {
+	-webkit-box-shadow: -8px 0px 0px -1px rgb(3,3,3, 0.7), -14px 0px 0px -1px rgba(3,3,3,0.3);
+    -moz-box-shadow: -8px 0px 0px -1px rgb(3,3,3, 0.7), -14px 0px 0px -1px rgba(3,3,3,0.3);
+    box-shadow: -8px 0px 0px -1px rgb(3,3,3, 0.7), -14px 0px 0px -1px rgba(3,3,3,0.3);
+}
+#card-src-container .card:nth-child(2) {
+  position: relative;
+  left: -50px;
+}
+
+/* Hand CSS */
+
+#art {
+	width: 182px;
+	height: 182px;
+}
+
+
+#art {
+	width: 52px;
+	height: 52px;
+}
+
+#art:after {
+	content: '';
+	display: block;
+	width: 4px;
+	height: 4px;
+	background: transparent;
+	box-shadow:
+	16px 12px #eeeeee,20px 12px #eeeeee,16px 16px #eeeeee,20px 16px #eeeeee,20px 20px #eeeeee,16px 20px #eeeeee,16px 24px #eeeeee,20px 24px #eeeeee,16px 28px #eeeeee,20px 28px #eeeeee,16px 32px #eeeeee,20px 32px #eeeeee,16px 36px #eeeeee,20px 36px #eeeeee,16px 40px #eeeeee,20px 40px #eeeeee,12px 40px #eeeeee,8px 36px #eeeeee,4px 32px #eeeeee,24px 40px #eeeeee,24px 36px #eeeeee,24px 32px #eeeeee,24px 28px #eeeeee,24px 24px #eeeeee,28px 28px #eeeeee,28px 32px #eeeeee,28px 36px #eeeeee,28px 40px #eeeeee,32px 32px #eeeeee,32px 36px #eeeeee,32px 40px #eeeeee,8px 32px #eeeeee,4px 36px #eeeeee,8px 40px #eeeeee,12px 44px #eeeeee,16px 44px #eeeeee,20px 44px #eeeeee,24px 44px #eeeeee,28px 44px #eeeeee,32px 44px #eeeeee,12px 36px #eeeeee,16px 8px #eeeeee,20px 8px #eeeeee,24px 20px #eeeeee,28px 24px #eeeeee,32px 28px #eeeeee;
+}
+</style>
+</head>
+<body>
+<div class="game-playground">
+	<div id="card-dest-container">
+    <div style="margin: 10px auto; display: flex;">
+      <div class="card slot" data-index="1">
+        <div class='slot-inner'>
+          <div id="art" class='hand'></div>
+        </div>
+      </div>
+      <div class="card slot" data-index="2">
+        <div class='slot-inner'>
+          <div id="art" class='hand'></div>
+        </div>
+      </div>
+      <div class="card slot" data-index="3">
+        <div class='slot-inner'>
+          <div id="art" class='hand'></div>
+        </div>
+      </div>
+      <div class="card slot" data-index="4">
+        <div class='slot-inner'>
+          <div id="art" class='hand'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="card-src-container">
+    <div id="discard">Dis-Card</div>
+  </div>
+<div>
+	
+	<button id="reload">Restart Game</button>
+	
+	<div>
+		Score: <span id="score"></span>
+	</div>
+	</div>
+</div>
+<div id="art"></div>
+
+<script>
+function Card(num) {
+	let ele = document.createElement('div');
+	ele.innerText = num;
+	ele.classList.add('card');
+	ele.dataset.data = num;
+	return ele;
+}
+
+var score = 0;
+
+var validValues = [2,4,8,16,32,64];
+var globalArr = {
+	src: []
+}
+function putCard(ele) {
+	let val = Math.floor(Math.random()*(5-0+1)+0);
+	let card = new Card(validValues[val]);
+	let srcContainer = document.getElementById(`card-${ele}-container`);
+	srcContainer.insertBefore(card, srcContainer.firstChild);
+	globalArr[ele].unshift(card);
+}
+function addCard() {
+	putCardInDest();
+}
+
+function setup() {
+	putCard('src');
+	putCard('src');
+}
+window.onload = function() {
+	setup();
+}
+
+var topValues = [3,3,3,3];
+var fullFlag = Array(4).fill(false);
+var slot = document.getElementsByClassName('slot');
+for (let i = 0; i < slot.length; i++) {
+	slot[i].addEventListener('click', handleClickOnSlot);
+}
+var normalizeFlag = false;
+function handleClickOnSlot() {
+	if (gameOver()) {
+		alert('Game Over');
+		reloadGame();
+		return;
+	}
+	if (normalizeFlag) {
+		return;
+	}
+	let topCard = globalArr['src'][globalArr['src'].length - 1];
+	let topCardBoundingRect = topCard.getBoundingClientRect();
+	let lastChild = this.children.length && this.children[this.children.length - 1];
+	if (!fullFlag[parseInt(this.dataset.index) - 1] || (topCard.dataset.data === lastChild.dataset.data)) {
+		normalizeFlag = true;
+		let card = globalArr['src'].pop();
+		let cloneCard = card.cloneNode(true);
+		let rect = card.getBoundingClientRect();
+		let rectOfLastChild = lastChild ? lastChild.getBoundingClientRect() : this.getBoundingClientRect();
+		card.classList.add('card-in-slot');
+		card.style.top = topValues[parseInt(this.dataset.index) - 1] + 'px';
+		topValues[parseInt(this.dataset.index) - 1] += 30;
+		card.style.opacity = '0';
+		animateIt(cloneCard, rect, rectOfLastChild, card, this);
+		let firstCard = globalArr['src'][0];
+		let firstCardClone = firstCard.cloneNode(true);
+		animateIt(firstCardClone, firstCard.getBoundingClientRect(), topCardBoundingRect, firstCard, this, true);
+		this.appendChild(card);
+		let that = this;
+		setTimeout(function() {
+			normalizeSlot(that);
+		}, 1200);
+		putCard('src');
+	}
+	else {
+		alert('Current slot is filled');
+	}
+}
+document.getElementById('score').innerText = score;
+
+function normalizeSlot(slot) {
+	let children = slot.children;
+	let scoreMultiplier = 1;
+	for (let i = children.length - 1; i > 0; i--) {
+		let child1 = children[i], child2 = children[i - 1];
+		if (child1.dataset.data === child2.dataset.data) {
+			
+			child2.dataset.data = parseInt(child1.dataset.data) + parseInt(child2.dataset.data);
+			score = !score ? 1 : (score + 1*scoreMultiplier);
+			scoreMultiplier++;
+			child2.innerText = child2.dataset.data;
+			slot.removeChild(child1);
+			topValues[parseInt(slot.dataset.index) - 1] -= 30;
+			if (i < slot.children.length - 1) {
+				i++;
+			}
+			document.getElementById('score').innerText = score;
+		}
+	}
+	if (slot.children.length > 7) {
+		fullFlag[parseInt(slot.dataset.index) - 1] = true;
+	}
+	else {
+		fullFlag[parseInt(slot.dataset.index) - 1] = false;
+	}
+	normalizeFlag = false;
+}
+
+document.getElementById('discard').addEventListener('click', handleDiscard);
+
+var discardCount = 0;
+function handleDiscard() {
+	if (discardCount < 2) {
+		let card = globalArr['src'].pop();
+		document.getElementById('card-src-container').removeChild(card);
+		putCard('src');
+		discardCount++;
+	}
+	else {
+		alert('No more cards can be discarded');
+	}
+}
+
+function animateIt(node, rect, to, card, slot, srcCardFlag) {
+	
+	//let rect = realNode.getBoundingClientRect();
+	node.classList.add('fake-node');
+	document.body.appendChild(node);
+	node.style.left = rect.x + 'px';
+	node.style.top = rect.y + 'px';
+	node.style.margin = '0';
+	setTimeout(function() {
+		node.style.left = to.x + 'px';
+		if (srcCardFlag) {
+			node.style.top = to.y + 'px';
+			card.style.opacity = '0';
+		}
+		else if (slot.children.length < 2) {
+			node.style.top = to.y + 3 + 'px';
+		}
+	    else {
+			node.style.top = to.y + 30 + 'px';
+		}
+	}, 1);
+	
+	setTimeout(function() {
+		node.style.display = 'none';
+		card.style.opacity = '1';
+	}, 1100);
+	
+}
+
+function gameOver() {
+	var flag = true;
+	fullFlag.forEach(e => {
+		flag = flag && e;
+	})
+	return flag;
+}
+
+function reloadGame() {
+	var slots = document.getElementsByClassName('slot');
+	for (let i = 0; i < slots.length; i++) {
+		while(slots[i].firstChild) {
+			slots[i].removeChild(slots[i].firstChild);
+		}
+	    slots[i].innerHTML = i+1;
+	}
+	discardCount = 0;
+	normalizeFlag = false;
+	fullFlag = Array(4).fill(false);
+	topValues = Array(4).fill(3);
+	score = 0;
+	document.getElementById('score').innerText = score;
+}
+
+document.getElementById('reload').addEventListener('click', reloadGame);
+//# sourceURL=userscript.js
+</script>
+</body>
+</html>
