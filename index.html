@@ -259,8 +259,9 @@
             return;
         }
         let topCard = globalArr['src'][globalArr['src'].length - 1];
+
         let topCardBoundingRect = topCard.getBoundingClientRect();
-        let lastChild = this.children.length && this.children[this.children.length - 1];
+        let lastChild = (this.children.length > 1) && this.children[this.children.length - 1];
         if (!fullFlag[parseInt(this.dataset.index) - 1] || (topCard.dataset.data === lastChild.dataset.data)) {
             normalizeFlag = true;
             let card = globalArr['src'].pop();
@@ -341,14 +342,16 @@
         node.style.left = rect.x + 'px';
         node.style.top = rect.y + 'px';
         node.style.margin = '0';
+        console.log(to);
         setTimeout(function () {
             node.style.left = to.x + 'px';
             if (srcCardFlag) {
                 node.style.top = to.y + 'px';
                 card.style.opacity = '0';
             }
-            else if (slot.children.length < 2) {
-                node.style.top = to.y + 3 + 'px';
+            else if (slot.children.length < 3) {
+                node.style.top = to.y + 5 + 'px';
+                node.style.left = to.x + 2 + 'px';
             }
             else {
                 node.style.top = to.y + 30 + 'px';
@@ -358,6 +361,9 @@
         setTimeout(function () {
             node.style.display = 'none';
             card.style.opacity = '1';
+            if (!srcCardFlag) {
+              card.style.left = '0px';
+            }
         }, 1100);
 
     }
