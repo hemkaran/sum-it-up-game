@@ -82,6 +82,7 @@
             font-size: 20px;
             position: relative;
             padding: 20px;
+
         }
 
         .slot-inner {
@@ -162,12 +163,33 @@
             background: transparent;
             box-shadow: 16px 12px #eeeeee, 20px 12px #eeeeee, 16px 16px #eeeeee, 20px 16px #eeeeee, 20px 20px #eeeeee, 16px 20px #eeeeee, 16px 24px #eeeeee, 20px 24px #eeeeee, 16px 28px #eeeeee, 20px 28px #eeeeee, 16px 32px #eeeeee, 20px 32px #eeeeee, 16px 36px #eeeeee, 20px 36px #eeeeee, 16px 40px #eeeeee, 20px 40px #eeeeee, 12px 40px #eeeeee, 8px 36px #eeeeee, 4px 32px #eeeeee, 24px 40px #eeeeee, 24px 36px #eeeeee, 24px 32px #eeeeee, 24px 28px #eeeeee, 24px 24px #eeeeee, 28px 28px #eeeeee, 28px 32px #eeeeee, 28px 36px #eeeeee, 28px 40px #eeeeee, 32px 32px #eeeeee, 32px 36px #eeeeee, 32px 40px #eeeeee, 8px 32px #eeeeee, 4px 36px #eeeeee, 8px 40px #eeeeee, 12px 44px #eeeeee, 16px 44px #eeeeee, 20px 44px #eeeeee, 24px 44px #eeeeee, 28px 44px #eeeeee, 32px 44px #eeeeee, 12px 36px #eeeeee, 16px 8px #eeeeee, 20px 8px #eeeeee, 24px 20px #eeeeee, 28px 24px #eeeeee, 32px 28px #eeeeee;
         }
+        .score-container {
+          display: flex;
+        }
+        .highest-score, .current-score, .extra {
+          padding: 10px;
+          text-align: center;
+          flex: 1;
+
+        }
     </style>
 </head>
 <body>
 <div class="game-playground">
-    <div id="card-dest-container">
-        <div style="margin: 10px auto; display: flex;">
+    <div id="card-dest-container" style="display: block;">
+        <div class="score-container">
+          <div class="highest-score" style="text-align: left;">
+              &#9819; <span id="high-score">0</span>
+          </div>
+          <div class="current-score">
+            <span id="score" style="font-size: 25px; color: #E91E63;"></span>
+          </div>
+
+          <div class="extra">
+
+          </div>
+        </div>
+        <div style="margin: 10px auto; display: flex; padding-left: 18px;">
             <div class="card slot" data-index="1">
                 <div class='slot-inner'>
                     <div id="art" class='hand'></div>
@@ -197,9 +219,7 @@
 
         <button id="reload">Restart Game</button>
 
-        <div>
-            Score: <span id="score"></span>
-        </div>
+
     </div>
 </div>
 <div id="art"></div>
@@ -235,6 +255,7 @@
     function setup() {
         putCard('src');
         putCard('src');
+        document.getElementById('high-score').innerText = localStorage.getItem('high-score') ? localStorage.getItem('high-score') : 0;
     }
 
     window.onload = function () {
@@ -298,7 +319,7 @@
             if (child1.dataset.data === child2.dataset.data) {
 
                 child2.dataset.data = parseInt(child1.dataset.data) + parseInt(child2.dataset.data);
-                score = !score ? 1 : (score + 1 * scoreMultiplier);
+                score = !score ? parseInt(child2.dataset.data) : (score + parseInt(child2.dataset.data) * scoreMultiplier);
                 scoreMultiplier++;
                 child2.innerText = child2.dataset.data;
                 slot.removeChild(child1);
@@ -306,7 +327,14 @@
                 if (i < slot.children.length - 1) {
                     i++;
                 }
-                document.getElementById('score').innerText = score;
+                //document.getElementById('score').innerText = score;
+                updateScore(document.getElementById('score'), score, 2000);
+                let highScore = localStorage.getItem('high-score') ? localStorage.getItem('high-score') : 0;
+                if (highScore < score) {
+                  updateScore(document.getElementById('high-score'), score, 2000);
+                  localStorage.setItem('high-score', score);
+                }
+
             }
         }
         if (slot.children.length > 7) {
