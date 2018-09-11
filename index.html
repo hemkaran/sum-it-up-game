@@ -337,6 +337,14 @@
         .instruction-toggle:hover {
           background: #311B92;
         }
+        .how-to-play-container {
+          width: 100%;
+          height: 702px;
+          z-index: 1;
+          position: absolute;
+          background: rgba(0,0,0,0.4);
+          display: none;
+        }
     </style>
 </head>
 <body>
@@ -345,18 +353,20 @@
     High Score
   </div>
     <div id="card-dest-container" style="display: block;">
-      <div class="how-to-play">
-        <div class="game-title">
-          Sum-It-Up
-        </div>
-        <div class="instruction">
-          <ol class="instruction-list">
-            <li>Click on any of the four slots available above to insert a card there from the deck available below.</li>
-            <li>Click on 'Discard' to discard a card from the deck. Only 2 cards can be discarded.</li>
-            <li>Chain cards in slot to increase score multiplier. e.g. (64 + 32 + 32) will give you 2x multiplier on score and so on.</li>
-            <li>Cards can not be transferred between slots.</li>
-            <li>Sum-It-Up to get the highest score.</li>
-          </ol>
+      <div class="how-to-play-container">
+        <div class="how-to-play">
+          <div class="game-title">
+            Sum-It-Up
+          </div>
+          <div class="instruction">
+            <ol class="instruction-list">
+              <li>Click on any of the four slots available above to insert a card there from the deck available below.</li>
+              <li>Click on 'Discard' to discard a card from the deck. Only 2 cards can be discarded.</li>
+              <li>Chain cards in slot to increase score multiplier. e.g. (64 + 32 + 32) will give you 2x multiplier on score and so on.</li>
+              <li>Cards can not be transferred between slots.</li>
+              <li>Sum-It-Up to get the highest score.</li>
+            </ol>
+          </div>
         </div>
       </div>
         <div class="score-container">
@@ -418,14 +428,26 @@
 
 <script>
 
+    function isDescendant(parent, child) {
+       var node = child.parentNode;
+       while (node != null) {
+           if (node == parent) {
+               return true;
+           }
+           node = node.parentNode;
+       }
+       return false;
+    }
     document.body.addEventListener('click', function(event) {
-      if (event.target !== document.getElementsByClassName('instruction-toggle')[0]) {
-        document.getElementsByClassName('how-to-play')[0].style.display = 'none';
+       var howToPlay = document.getElementsByClassName('how-to-play')[0];
+      if (event.target !== document.getElementsByClassName('instruction-toggle')[0] && event.target !== howToPlay && !isDescendant(howToPlay, event.target)) {
+        document.getElementsByClassName('how-to-play-container')[0].style.display = 'none';
+        console.log('inside body');
       }
     });
     document.getElementsByClassName('instruction-toggle')[0].addEventListener('click', function(event) {
       if (this === event.target) {
-        document.getElementsByClassName('how-to-play')[0].style.display = 'block';
+        document.getElementsByClassName('how-to-play-container')[0].style.display = 'block';
       }
     })
     function Card(num) {
@@ -456,6 +478,10 @@
     }
 
     function setup() {
+        var showInstruction = localStorage.getItem('instruction');
+        if (!showInstruction) {
+          document.getElementsByClassName('how-to-play-container')[0].style.display = 'block';
+        }
         var viewport = document.getElementById('myViewport');
         var scale = ((window.outerWidth / 452).toFixed(2) - 0.02).toFixed(2);
         var val = "width=device-width, initial-scale=" + scale + ", maximum-scale=1.0, user-scalable=no"
@@ -463,6 +489,7 @@
         putCard('src');
         putCard('src');
         document.getElementById('high-score').innerText = localStorage.getItem('high-score') ? localStorage.getItem('high-score') : 0;
+        localStorage.setItem('instruction', true);
     }
 
     window.onload = function () {
