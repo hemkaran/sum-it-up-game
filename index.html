@@ -8,6 +8,8 @@
         * {
             font-family: Arial, Helvetica, sans-serif;
             user-select: none;
+            margin: 0;
+            padding: 0;
         }
 
         body {
@@ -150,6 +152,7 @@
           padding: 15px 30px;
           box-sizing: border-box;
           border-top: 2px dashed black;
+          flex-wrap: wrap;
         }
 
         #card-dest-container {
@@ -157,6 +160,7 @@
             border-radius: 5px;
             min-height: 100px;
             height: 490px;
+            margin-top: 10px;
         }
 
         .fake-node {
@@ -282,6 +286,57 @@
         .high-score-animation {
           animation: highScoreAnim 3s linear infinite;
         }
+
+        .how-to-play {
+          position: absolute;
+          top: 212px;
+          left: calc(50% - 45%);
+          background: #EEEEEE;
+          color: black;
+          width: 90%;
+          border-radius: 12px;
+          height: 261px;
+          padding: 20px;
+          box-sizing: border-box;
+          font-size: 20px;
+          -webkit-box-shadow: 0px 2px 8px 3px rgba(208,208,208,1);
+          -moz-box-shadow: 0px 2px 8px 3px rgba(208,208,208,1);
+          box-shadow: 0px 2px 8px 3px rgba(208,208,208,1);
+        }
+        .instruction {
+          font-size: 12px;
+          width: 100%;
+          margin: 10px auto;
+          background: #F5F5F5;
+          padding: 20px 30px;
+          box-sizing: border-box;
+          border-radius: 5px;
+        }
+        .game-title {
+          width: 50%;
+          margin: auto;
+          text-align: center;
+          font-weight: bold;
+          font-family: cursive;
+          font-size: 25px;
+        }
+        .instruction-list li {
+          margin-bottom: 5px;
+        }
+        .instruction-toggle {
+          padding: 8px;
+          font-size: 14px;
+          background: #7E57C2;
+          color: white;
+          border-radius: 5px;
+          margin: auto;
+          margin-top: 10px;
+          cursor: pointer;
+          transition: background 300ms ease-in-out;
+        }
+        .instruction-toggle:hover {
+          background: #311B92;
+        }
     </style>
 </head>
 <body>
@@ -290,6 +345,20 @@
     High Score
   </div>
     <div id="card-dest-container" style="display: block;">
+      <div class="how-to-play">
+        <div class="game-title">
+          Sum-It-Up
+        </div>
+        <div class="instruction">
+          <ol class="instruction-list">
+            <li>Click on any of the four slots available above to insert a card there from the deck available below.</li>
+            <li>Click on 'Discard' to discard a card from the deck. Only 2 cards can be discarded.</li>
+            <li>Chain cards in slot to increase score multiplier. e.g. (64 + 32 + 32) will give you 2x multiplier on score and so on.</li>
+            <li>Cards can not be transferred between slots.</li>
+            <li>Sum-It-Up to get the highest score.</li>
+          </ol>
+        </div>
+      </div>
         <div class="score-container">
           <div class="highest-score" style="text-align: left;">
               &#9819; <span id="high-score">0</span>
@@ -341,10 +410,24 @@
                 X
           </div>
         </div>
+        <div class="instruction-toggle">
+          How to Play
+        </div>
     </div>
 </div>
 
 <script>
+
+    document.body.addEventListener('click', function(event) {
+      if (event.target !== document.getElementsByClassName('instruction-toggle')[0]) {
+        document.getElementsByClassName('how-to-play')[0].style.display = 'none';
+      }
+    });
+    document.getElementsByClassName('instruction-toggle')[0].addEventListener('click', function(event) {
+      if (this === event.target) {
+        document.getElementsByClassName('how-to-play')[0].style.display = 'block';
+      }
+    })
     function Card(num) {
         let ele = document.createElement('div');
         ele.innerText = num;
@@ -524,7 +607,6 @@
         node.style.left = rect.x + 'px';
         node.style.top = rect.y + 'px';
         node.style.margin = '0';
-        console.log(to);
         setTimeout(function () {
             node.style.left = to.x + 'px';
             if (srcCardFlag) {
@@ -600,7 +682,6 @@
             }
         }, stepTime);
         setTimeout(function () {
-            console.log('time up');
         }, time);
     };
 
