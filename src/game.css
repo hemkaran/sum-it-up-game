@@ -287,20 +287,17 @@ body {
 }
 
 .how-to-play {
-    position: absolute;
-    top: 212px;
-    left: calc(50% - 45%);
     background: #EEEEEE;
     color: black;
     width: 90%;
     border-radius: 12px;
-    height: 261px;
     padding: 20px;
     box-sizing: border-box;
     font-size: 20px;
-    -webkit-box-shadow: 0px 2px 8px 3px rgba(208, 208, 208, 1);
-    -moz-box-shadow: 0px 2px 8px 3px rgba(208, 208, 208, 1);
-    box-shadow: 0px 2px 8px 3px rgba(208, 208, 208, 1);
+    -webkit-box-shadow: 0 2px 8px 3px rgba(208, 208, 208, 1);
+    -moz-box-shadow: 0 2px 8px 3px rgba(208, 208, 208, 1);
+    box-shadow: 0 2px 8px 3px rgba(208, 208, 208, 1);
+    text-align: center;
 }
 
 .instruction {
@@ -311,6 +308,7 @@ body {
     padding: 20px 30px;
     box-sizing: border-box;
     border-radius: 5px;
+    text-align: left;
 }
 
 .game-title {
@@ -326,19 +324,34 @@ body {
     margin-bottom: 5px;
 }
 
-.instruction-toggle {
+.button {
     padding: 8px;
     font-size: 14px;
     background: #7E57C2;
     color: white;
     border-radius: 5px;
-    margin: auto;
-    margin-top: 10px;
     cursor: pointer;
     transition: background 300ms ease-in-out;
+    text-align: center;
 }
 
-.instruction-toggle:hover {
+.button:hover {
+    background: #311B92;
+}
+
+.play-button {
+    margin: auto;
+    margin-top: 5px;
+    padding: 8px 20px;
+    display: inline-block;
+}
+
+.instruction-toggle {
+    margin: auto;
+    margin-top: 10px;
+}
+
+.button:hover {
     background: #311B92;
 }
 
@@ -349,6 +362,8 @@ body {
     position: absolute;
     background: rgba(0, 0, 0, 0.4);
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 #score {

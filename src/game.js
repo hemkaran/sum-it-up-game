@@ -15,12 +15,16 @@
         var howToPlay = document.getElementsByClassName('how-to-play')[0];
         if (event.target !== document.getElementsByClassName('instruction-toggle')[0] && event.target !== howToPlay && !isDescendant(howToPlay, event.target)) {
             document.getElementsByClassName('how-to-play-container')[0].style.display = 'none';
-            console.log('inside body');
         }
     });
     document.getElementsByClassName('instruction-toggle')[0].addEventListener('click', function (event) {
         if (this === event.target) {
-            document.getElementsByClassName('how-to-play-container')[0].style.display = 'block';
+            document.getElementsByClassName('how-to-play-container')[0].style.display = 'flex';
+        }
+    });
+    document.getElementsByClassName('play-button')[0].addEventListener('click', function (event) {
+        if (this === event.target) {
+            document.getElementsByClassName('how-to-play-container')[0].style.display = 'none';
         }
     });
     function Card(num) {
@@ -53,7 +57,7 @@
     function setup() {
         var showInstruction = localStorage.getItem('instruction');
         if (!showInstruction) {
-            document.getElementsByClassName('how-to-play-container')[0].style.display = 'block';
+            document.getElementsByClassName('how-to-play-container')[0].style.display = 'flex';
         }
         var viewport = document.getElementById('myViewport');
         var scale = ((window.outerWidth / 452).toFixed(2) - 0.02).toFixed(2);
@@ -187,6 +191,7 @@
             document.getElementById('card-src-container').removeChild(card);
             putCard('src');
             discardCount++;
+            document.querySelector('.discard-count').innerHTML = discardCount;
             setTimeout(function () {
                 document.getElementsByClassName('slot-' + discardCount)[0].style.background = color;
                 document.getElementsByClassName('slot-' + discardCount)[0].style.color = 'white';
