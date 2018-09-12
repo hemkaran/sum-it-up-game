@@ -11,6 +11,7 @@
         }
         return false;
     }
+    var alertElem = document.getElementsByClassName('alert-box-container')[0];
     document.body.addEventListener('click', function (event) {
         var howToPlay = document.getElementsByClassName('how-to-play')[0];
         if (event.target !== document.getElementsByClassName('instruction-toggle')[0] && event.target !== howToPlay && !isDescendant(howToPlay, event.target)) {
@@ -26,6 +27,10 @@
         if (this === event.target) {
             document.getElementsByClassName('how-to-play-container')[0].style.display = 'none';
         }
+    });
+
+    document.getElementsByClassName('ok-button')[0].addEventListener('click', function() {
+      alertElem.style.display = 'none';
     });
     function Card(num) {
         var ele = document.createElement('div');
@@ -53,7 +58,12 @@
     function addCard() {
         putCardInDest();
     }
+    function showAlert(msg) {
+      var alert = document.getElementsByClassName('alert-message')[0];
+      alert.innerText = msg;
+      alertElem.style.display = 'block';
 
+    }
     function setup() {
         var showInstruction = localStorage.getItem('instruction');
         if (!showInstruction) {
@@ -82,7 +92,6 @@
     var normalizeFlag = false;
 
     function handleClickOnSlot() {
-
         if (normalizeFlag) {
             return;
         }
@@ -111,7 +120,7 @@
             }, 1200);
             putCard('src');
         } else {
-            alert('Current slot is filled');
+            showAlert('Current slot is filled');
         }
     }
 
@@ -170,7 +179,7 @@
             fullFlag[parseInt(slot.dataset.index) - 1] = false;
         }
         if (gameOver()) {
-            alert('Game Over');
+            showAlert('Game Over');
             reloadGame();
             return;
         }
@@ -197,7 +206,7 @@
                 document.getElementsByClassName('slot-' + discardCount)[0].style.color = 'white';
             }, 1500);
         } else {
-            alert('No more cards can be discarded');
+            showAlert('No more cards can be discarded');
         }
     }
 
@@ -245,7 +254,7 @@
             while (slots[_i2].firstChild) {
                 slots[_i2].removeChild(slots[_i2].firstChild);
             }
-            slots[_i2].innerHTML = '<div class="slot-inner">' + '<div id="art" class="hand"></div></div>';
+            slots[_i2].innerHTML = '<div class="slot-inner">' + '<div class="hand hand-art"></div></div>';
         }
         discardCount = 0;
         normalizeFlag = false;

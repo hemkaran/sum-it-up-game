@@ -79,6 +79,7 @@ body {
     position: relative;
     padding: 20px;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .slot-inner {
@@ -300,6 +301,58 @@ body {
     text-align: center;
 }
 
+.alert-box {
+    background: white;
+    color: black;
+    width: 60%;
+    border: 2px solid #FF1744;
+    height: auto;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    -webkit-box-shadow: 0 2px 8px 3px rgba(208, 208, 208, 1);
+    -moz-box-shadow: 0 2px 8px 3px rgba(208, 208, 208, 1);
+    box-shadow: 0 2px 8px 2px rgba(208, 208, 208, 1);
+    text-align: center;
+    position: absolute;
+    top: 238px;
+    left: calc(50% - 30%);
+}
+.alert-box-container {
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  height: 702px;
+  background: rgba(0,0,0,0.3);
+  display: none;
+}
+
+.red-cross {
+  padding: 5px;
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #FF1744;
+}
+.alert-message {
+  font-weight: bold;
+  margin-bottom: 25px;
+  font-family: fantasy;
+}
+.ok-button {
+  width: 25%;
+  font-size: 12px;
+  padding: 6px;
+  margin: auto;
+  background: #039BE5;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 300ms ease-in-out;
+}
+.ok-button:hover {
+  background: #0277BD;
+}
 .instruction {
     font-size: 12px;
     width: 100%;
