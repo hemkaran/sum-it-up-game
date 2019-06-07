@@ -1,5 +1,6 @@
 # sum-it-up-game
 A game in pure JS / CSS. Sum to make it highest score
+Demo: https://hemkaran.github.io/sum-it-up-game/
 
 # setup
 `yarn install`
